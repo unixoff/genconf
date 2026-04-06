@@ -14,22 +14,9 @@ The utility:
 Run with:
 
 ```bash
-cargo run -- --config example/values.yaml
+cargo build --release
+./target/release/confgen --config example/values.yaml
 ```
-
-Run with the default config path:
-
-```bash
-cargo run
-```
-
-Or after building:
-
-```bash
-cargo run --release -- --config example/values.yaml
-```
-
-If `--config` is not provided, `values.yaml` is used by default.
 
 ## Configuration structure
 
@@ -159,17 +146,3 @@ For example:
 - `worker-fixed-name.conf`
 
 A minimal working example is available in `example/`.
-
-## Tests
-
-Run all tests with:
-
-```bash
-cargo test
-```
-
-The project currently includes:
-
-- unit tests for rendering logic
-- unit tests for file writing logic
-- one integration test for end-to-end generation
