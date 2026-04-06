@@ -1,5 +1,5 @@
-pathToTarget: /home/confgen/example/conf.d/
-pathToTemplate: /home/confgen/example/template/
+pathToTarget: ./example/conf.d/
+pathToTemplate: ./example/template/
 template: template-main.conf
 targetExtension: conf
 
