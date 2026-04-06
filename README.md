@@ -17,13 +17,19 @@ Run with:
 cargo run -- --config example/values.yaml
 ```
 
+Run with the default config path:
+
+```bash
+cargo run
+```
+
 Or after building:
 
 ```bash
 cargo run --release -- --config config/values.yaml
 ```
 
-If `--config` is not provided, `config.yaml` is used by default.
+If `--config` is not provided, `values.yaml` is used by default.
 
 ## Configuration structure
 
@@ -133,6 +139,7 @@ The following simple filter is currently supported:
 
 ```text
 {{ autostart | lower }}
+{{ user | upper }}
 ```
 
 The `name` field comes from `configs[].name` and is also available inside templates.
@@ -152,3 +159,21 @@ For example:
 - `worker-fixed-name.conf`
 
 A minimal working example is available in `example/`.
+
+## Tests
+
+Run all tests with:
+
+```bash
+cargo test
+```
+
+The project currently includes:
+
+- unit tests for rendering logic
+- unit tests for file writing logic
+- one integration test for end-to-end generation
+
+## CI
+
+GitHub Actions runs `cargo test` on every push and pull request.
