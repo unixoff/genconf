@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 env:
-  BINARY_NAME: confgen
+  BINARY_NAME: genconf
 
 jobs:
   build:
@@ -19,9 +19,9 @@ jobs:
       matrix:
         include:
           - os: ubuntu-24.04
-            artifact_name: confgen-linux-x86_64
+            artifact_name: genconf-linux-x86_64
           - os: macos-14
-            artifact_name: confgen-macos-aarch64
+            artifact_name: genconf-macos-aarch64
 
     runs-on: ${{ matrix.os }}
 
