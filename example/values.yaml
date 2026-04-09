@@ -2,10 +2,11 @@ pathToTarget: ./example/conf.d/
 pathToTemplate: ./example/template/
 template: template-main.conf
 targetExtension: conf
+cleanTarget: true
 
 values:
-  php_bin: /usr/bin/php
-  console: /srv/app/bin/console
+  python_bin: /usr/bin/python3
+  script: /srv/app/bin/worker.py
   user: app
   autostart: true
   autorestart: true
@@ -17,18 +18,18 @@ values:
 configs:
   - name: worker-default
     values:
-      command_args: queue:consume default
+      command_args: consume default
 
   - name: worker-shared-prefix
     template: template-fixed-log-prefix.conf
     values:
-      command_args: queue:consume shared
+      command_args: consume shared
       startsecs: 5
       log_prefix: shared-worker
 
   - name: worker-fixed-name
     template: template-fixed-log-name.conf
     values:
-      command_args: queue:consume fixed-name
+      command_args: consume fixed-name
       startsecs: 2
       log_name: fixed-worker

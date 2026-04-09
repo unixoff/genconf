@@ -10,6 +10,8 @@ pub struct Config {
     pub path_to_template: String,
     pub template: String,
     pub target_extension: String,
+    #[serde(default)]
+    pub clean_target: bool,
     pub values: ValuesMap,
     pub configs: Vec<ConfigItem>,
 }

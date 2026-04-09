@@ -82,6 +82,7 @@ mod tests {
             path_to_template: String::new(),
             template: "template.conf".to_string(),
             target_extension: "conf".to_string(),
+            clean_target: false,
             values,
             configs: Vec::new(),
         }
@@ -98,7 +99,10 @@ mod tests {
     #[test]
     fn applies_plain_variables() {
         let mut values = ValuesMap::new();
-        values.insert("command_args".to_string(), string_value("queue:consume default"));
+        values.insert(
+            "command_args".to_string(),
+            string_value("queue:consume default"),
+        );
 
         let rendered = apply_values("command={{ command_args }}", &values);
 
