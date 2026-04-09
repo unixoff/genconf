@@ -1,5 +1,12 @@
 # genconf
 
+![GitHub top language](https://img.shields.io/github/languages/top/unixoff/genconf)
+[![crates.io](https://img.shields.io/crates/v/genconf.svg)](https://crates.io/crates/genconf)
+[![crates.io](https://img.shields.io/crates/d/genconf.svg)](https://crates.io/crates/genconf)
+[![Released API docs](https://docs.rs/genconf/badge.svg)](https://docs.rs/genconf)
+![Crates.io](https://img.shields.io/crates/l/genconf)
+[![dependency status](https://deps.rs/repo/github/unixoff/genconf/status.svg)](https://deps.rs/repo/github/unixoff/genconf)
+
 `genconf` is a CLI utility for generating config files from templates.
 
 The utility:
@@ -26,8 +33,11 @@ Main fields:
 - `pathToTarget` - path to the directory where rendered config files will be written
 - `template` - default template name
 - `targetExtension` - extension for generated files
+- `cleanTarget` - when enabled, removes files from `pathToTarget` that are not part of the current generation run
 - `values` - shared default values
 - `configs` - list of config files to generate
+
+Use `cleanTarget: true` when the target directory should contain only files managed by the current config. This is useful when configs were removed or renamed and stale files must be cleaned up automatically.
 
 ### Shared `values` block
 
@@ -37,8 +47,8 @@ Example:
 
 ```yaml
 values:
-  php_bin: /usr/bin/php
-  console: /srv/app/bin/console
+  python_bin: /usr/bin/python3
+  script: /srv/app/bin/worker.py
   user: app
   autostart: true
   autorestart: true
@@ -58,12 +68,12 @@ Example:
 configs:
   - name: worker-default
     values:
-      command_args: queue:consume default
+      command_args: consume default
 
   - name: worker-shared-prefix
     template: template-fixed-log-prefix.conf
     values:
-      command_args: queue:consume shared
+      command_args: consume shared
       startsecs: 5
       log_prefix: shared-worker
 ```
@@ -80,10 +90,11 @@ pathToTarget: ./example/conf.d/
 pathToTemplate: ./example/template/
 template: template-main.conf
 targetExtension: conf
+cleanTarget: true
 
 values:
-  php_bin: /usr/bin/php
-  console: /srv/app/bin/console
+  python_bin: /usr/bin/python3
+  script: /srv/app/bin/worker.py
   user: app
   autostart: true
   autorestart: true
@@ -95,19 +106,19 @@ values:
 configs:
   - name: worker-default
     values:
-      command_args: queue:consume default
+      command_args: consume default
 
   - name: worker-shared-prefix
     template: template-fixed-log-prefix.conf
     values:
-      command_args: queue:consume shared
+      command_args: consume shared
       startsecs: 5
       log_prefix: shared-worker
 
   - name: worker-fixed-name
     template: template-fixed-log-name.conf
     values:
-      command_args: queue:consume fixed-name
+      command_args: consume fixed-name
       startsecs: 2
       log_name: fixed-worker
 ```
