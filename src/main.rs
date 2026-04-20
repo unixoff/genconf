@@ -6,14 +6,12 @@ mod writer;
 
 use clap::Parser;
 use cli::Cli;
-use config::Config;
-use std::fs;
+use config::load_config;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli: Cli = Cli::parse();
 
-    let content: String = fs::read_to_string(&cli.config)?;
-    let config: Config = serde_yaml_ng::from_str(&content)?;
+    let config = load_config(&cli.configs)?;
 
     app::run(&config)?;
 

@@ -1,5 +1,5 @@
 use crate::config::{Config, ConfigItem, ValuesMap, value_as_string};
-use std::{fs, path::Path};
+use std::{fs, io, path::Path};
 
 pub fn render_config_item(
     config: &Config,
@@ -8,7 +8,15 @@ pub fn render_config_item(
     let template_name = item.template.as_deref().unwrap_or(&config.template);
 
     let template_path = Path::new(&config.path_to_template).join(template_name);
-    let template_content = fs::read_to_string(&template_path)?;
+    let template_content = fs::read_to_string(&template_path).map_err(|err| {
+        io::Error::new(
+            err.kind(),
+            format!(
+                "failed to read template '{}': {err}",
+                template_path.display()
+            ),
+        )
+    })?;
 
     let values = get_values(&config.values, item);
     let render = apply_values(&template_content, &values);

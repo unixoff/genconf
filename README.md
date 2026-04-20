@@ -25,6 +25,22 @@ cargo build --release
 ./target/release/genconf --config example/values.yaml
 ```
 
+Multiple YAML configs can be passed by repeating `--config` or `-c`:
+
+```bash
+./target/release/genconf \
+  --config example/values.yaml \
+  --config example/workers.yaml
+```
+
+Configs are merged in the order they are passed. Each next file overrides or extends the previous result. If no config is passed, `values.yaml` is used.
+
+Merge rules:
+
+- mappings are merged recursively
+- scalar values are replaced by later configs
+- arrays are replaced by later configs
+
 ## Configuration structure
 
 Main fields:
